@@ -149,6 +149,7 @@ void find_mail (){
         if(strstr(copy_danhsach, copy_mail) != NULL){
             output_ct(danhsach_ct[i]);
             cnt++;
+            printf("\n");
         }
     }
     if(cnt == 0)

@@ -55,6 +55,11 @@ void cong_dt(dt &p, dt &q, dt &r){
     r.bac = (p.bac > q.bac) ? p.bac : q.bac;
     //cấp phát bộ nhớ có r
     r.heso = (int*)malloc((r.bac+1)*sizeof(int));
+
+    //khởi tạo hệ số của r, loại bỏ giá trị rác
+    for(int i = 0; i <= r.bac; i++){
+        r.heso[i] = 0;
+    }
     //copy hệ số của p vào r
     for(int i = 0; i <= p.bac; i++){
         r.heso[i] = p.heso[i];
