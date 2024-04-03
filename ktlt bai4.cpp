@@ -15,13 +15,13 @@ void cho_phim(){
     getch();
 }
 
-#define MAX 2000 //danh bạ tối đa 2000 contact
-contact *danhsach_ct = (contact*)malloc(MAX * sizeof(contact)); //mảng contact lưu danh bạ
-int sl = 0; //sl contact thực tế
+#define MAX 2000 //danh ba toi da 2000 contact
+contact *danhsach_ct = (contact*)malloc(MAX * sizeof(contact)); //mang contact luu danh ba
+int sl = 0; //sl contact thuc te
 
-//nhập contact
+//nhap contact
 void input_ct(contact *a) {
-    fflush(stdin); // Xoá dữ liệu trong bộ nhớ đệm
+    fflush(stdin); // xoa du lieu
     printf("Nhap thong tin contact:\n");
     printf("- Ho va ten: "); gets(a->hoten);
     printf("- So dien thoai: "); gets(a->sdt); 
@@ -149,7 +149,6 @@ void find_mail (){
         if(strstr(copy_danhsach, copy_mail) != NULL){
             output_ct(danhsach_ct[i]);
             cnt++;
-            printf("\n");
         }
     }
     if(cnt == 0)
@@ -234,6 +233,20 @@ int cmp (char test1[], char test2[], int i, int j){
     return 0;
 }
 
+void swap_contacts(contact *a, contact *b) {
+    contact temp;
+    strcpy(temp.hoten, a->hoten);
+    strcpy(temp.sdt, a->sdt);
+    strcpy(temp.email, a->email);
+
+    strcpy(a->hoten, b->hoten);
+    strcpy(a->sdt, b->sdt);
+    strcpy(a->email, b->email);
+
+    strcpy(b->hoten, temp.hoten);
+    strcpy(b->sdt, temp.sdt);
+    strcpy(b->email, temp.email);
+}
 void sort_name(contact danhsach_ct[], int sl){
     printf("Danh sach contact can sap xep:\n");
     printf(header);
@@ -262,10 +275,7 @@ void sort_name(contact danhsach_ct[], int sl){
             int check = cmp(danhsach_ct[i].hoten, danhsach_ct[i+1].hoten, a, b);
             if (check == -1) {
                 // Hoán đổi
-                char temp[41];
-                strcpy(temp, danhsach_ct[i].hoten);
-                strcpy(danhsach_ct[i].hoten, danhsach_ct[i+1].hoten);
-                strcpy(danhsach_ct[i+1].hoten, temp);
+                swap_contacts(&danhsach_ct[i],&danhsach_ct[i+1]);
             } else if (check == 0) {
                 // Tiếp tục so sánh các từ tiếp theo nếu cần
                 while (j >= 0 && k >= 0) {
@@ -285,10 +295,7 @@ void sort_name(contact danhsach_ct[], int sl){
                     check = cmp(danhsach_ct[i].hoten, danhsach_ct[i + 1].hoten, a, b);
                     if (check == -1) {
                         // Hoán đổi
-                        char temp[41];
-                        strcpy(temp, danhsach_ct[i].hoten);
-                        strcpy(danhsach_ct[i].hoten, danhsach_ct[i+1].hoten);
-                        strcpy(danhsach_ct[i+1].hoten, temp);
+                        swap_contacts(&danhsach_ct[i],&danhsach_ct[i+1]);
                         // Cập nhật mảng tests
                         break;
                     } else if (check == 1) {
@@ -314,7 +321,7 @@ void menu(){
         printf(" DANH BA DIEN THOAI \n"
             "--------------------------\n"
             "[So luong hien co = %d]\n"
-            "1. Them contac vao danh ba\n"
+            "1. Them contact vao danh ba\n"
             "2. Tim kiem contacct\n"
             "3. Xoa contact khoi danh ba\n"
             "4. Sap xep ho ten danh ba\n"
